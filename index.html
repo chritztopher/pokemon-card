@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Card - Pure JavaScript</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/rainbow-holo.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        main {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .card-container {
+            width: 330px;
+            height: 459px;
+        }
+
+        .loading-text {
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Add some additional styles for better presentation */
+        .instructions {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 300px;
+            z-index: 1000;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #00ffff;
+        }
+
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h3>Pokemon Card Controls</h3>
+        <ul>
+            <li>🖱️ <strong>Hover/Move</strong> - Interactive tilt effects</li>
+            <li>🖱️ <strong>Click</strong> - Expand/collapse card</li>
+            <li>📱 <strong>Tilt device</strong> - Device orientation effects</li>
+            <li>⌨️ <strong>Tab + Enter</strong> - Keyboard navigation</li>
+        </ul>
+        <p><small>All the original Svelte functionality preserved!</small></p>
+    </div>
+
+    <main>
+        <div id="pokemon-card" class="card-container">
+            <p class="loading-text">Loading...</p>
+        </div>
+    </main>
+
+    <!-- JavaScript Modules -->
+    <script type="module">
+        import { PokemonCard } from './js/components/PokemonCard.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('pokemon-card');
+
+            // Custom card data - same as the original Svelte example
+            const customCard = {
+                id: "custom-007",
+                set: "custom",
+                name: "Christopher Giroux",
+                supertype: "Pokémon",
+                subtypes: ["Basic"],
+                types: ["Psychic"],
+                number: "007",
+                rarity: "Rare Rainbow",
+                img: "/assets/cards/PokePoke.png" // You'll need to add this image
+            };
+
+            // Create the Pokemon card
+            const pokemonCard = new PokemonCard(container, customCard);
+
+            // Optional: Store reference for debugging
+            window.pokemonCard = pokemonCard;
+
+            console.log('Pokemon Card initialized successfully!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Card Demo - Pure JavaScript</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/rainbow-holo.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        main {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card-container {
+            width: 330px;
+            height: 459px;
+        }
+
+        .loading-text {
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .instructions {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 300px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #00ffff;
+        }
+
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+
+        .demo-title {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .demo-title h2 {
+            margin: 0;
+            color: #ffcc00;
+        }
+
+        .demo-title p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .instructions, .demo-title {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h3>🎮 Controls</h3>
+        <ul>
+            <li>🖱️ <strong>Hover</strong> - Tilt effects</li>
+            <li>👆 <strong>Click</strong> - Expand card</li>
+            <li>📱 <strong>Tilt device</strong> - Gyro effects</li>
+            <li>⌨️ <strong>Tab + Enter</strong> - Keyboard</li>
+        </ul>
+        <p><small>✨ All Svelte features converted!</small></p>
+    </div>
+
+    <div class="demo-title">
+        <h2>Pokemon Card Demo</h2>
+        <p>Pure JavaScript + CSS</p>
+    </div>
+
+    <main>
+        <div id="pikachu-card" class="card-container">
+            <p class="loading-text">Loading Pikachu...</p>
+        </div>
+
+        <div id="charizard-card" class="card-container">
+            <p class="loading-text">Loading Charizard...</p>
+        </div>
+    </main>
+
+    <!-- JavaScript Modules -->
+    <script type="module">
+        import { PokemonCard } from './js/components/PokemonCard.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pikachu card with real Pokemon TCG API image
+            const pikachuContainer = document.getElementById('pikachu-card');
+            const pikachuCard = new PokemonCard(pikachuContainer, {
+                id: "sv3pt5-141",
+                name: "Pikachu ex",
+                supertype: "Pokémon",
+                subtypes: ["Basic", "ex"],
+                types: ["Lightning"],
+                number: "141",
+                rarity: "Double Rare",
+                img: "sv3pt5/141.png" // This will use Pokemon TCG API
+            });
+
+            // Charizard card with real Pokemon TCG API image
+            const charizardContainer = document.getElementById('charizard-card');
+            const charizardCard = new PokemonCard(charizardContainer, {
+                id: "sv4pt5-126",
+                name: "Charizard ex",
+                supertype: "Pokémon",
+                subtypes: ["Stage 2", "ex"],
+                types: ["Fire"],
+                number: "126",
+                rarity: "Double Rare",
+                img: "sv4pt5/126.png" // This will use Pokemon TCG API
+            });
+
+            // Store references for debugging
+            window.pikachuCard = pikachuCard;
+            window.charizardCard = charizardCard;
+
+            console.log('Pokemon Cards initialized successfully!');
+            console.log('Try hovering, clicking, and tilting your device!');
+        });
+    </script>
+</body>
+</html>

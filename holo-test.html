@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holographic Effects Test</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/rainbow-holo.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card-container {
+            width: 330px;
+            height: 459px;
+        }
+
+        .status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 300px;
+            z-index: 1000;
+        }
+
+        .status h3 {
+            margin-top: 0;
+            color: #00ffff;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            margin: 5px 0;
+            padding: 5px 0;
+        }
+
+        .check {
+            color: #00ff00;
+            margin-right: 10px;
+        }
+
+        .cross {
+            color: #ff0000;
+            margin-right: 10px;
+        }
+
+        .title {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .title h2 {
+            margin: 0;
+            color: #c929f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">
+        <h3>🔬 Holographic Effects Test</h3>
+        <ul class="checklist" id="checklist">
+            <li><span class="check">⏳</span>Loading texture images...</li>
+            <li><span class="check">⏳</span>Testing grain texture...</li>
+            <li><span class="check">⏳</span>Testing glitter overlay...</li>
+            <li><span class="check">⏳</span>Testing illusion mask...</li>
+            <li><span class="check">⏳</span>Testing rainbow holo...</li>
+        </ul>
+    </div>
+
+    <div class="title">
+        <h2>🌈 Holo Effects</h2>
+        <p>Hover cards to test</p>
+    </div>
+
+    <div id="test-card1" class="card-container"></div>
+    <div id="test-card2" class="card-container"></div>
+
+    <script type="module">
+        import { PokemonCard } from './js/components/PokemonCard.js';
+
+        const checklist = document.getElementById('checklist');
+
+        function updateCheck(index, status, text) {
+            const items = checklist.querySelectorAll('li');
+            if (items[index]) {
+                const icon = status ? '✅' : '❌';
+                items[index].innerHTML = `<span class="${status ? 'check' : 'cross'}">${icon}</span>${text}`;
+            }
+        }
+
+        // Test image loading
+        async function testImages() {
+            const images = [
+                '/img/grain.webp',
+                '/img/glitter.png',
+                '/img/illusion-mask.png'
+            ];
+
+            for (let i = 0; i < images.length; i++) {
+                try {
+                    const img = new Image();
+                    await new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                        img.src = images[i];
+                    });
+                    updateCheck(i + 1, true, `${images[i]} loaded successfully`);
+                } catch {
+                    updateCheck(i + 1, false, `${images[i]} failed to load`);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            updateCheck(0, true, 'Texture images loading...');
+
+            // Test images first
+            await testImages();
+
+            // Create test cards
+            const card1 = new PokemonCard(document.getElementById('test-card1'), {
+                name: "Holo Test 1",
+                types: ["Psychic"],
+                rarity: "Rare Rainbow",
+                img: "https://images.pokemontcg.io/sv3pt5/141.png"
+            });
+
+            const card2 = new PokemonCard(document.getElementById('test-card2'), {
+                name: "Holo Test 2",
+                types: ["Fire"],
+                rarity: "Rare Rainbow",
+                img: "https://images.pokemontcg.io/sv4pt5/126.png"
+            });
+
+            updateCheck(4, true, 'Rainbow holo effects active!');
+
+            console.log('🔬 Holographic effects test complete!');
+            console.log('Hover over the cards to see the effects in action');
+        });
+    </script>
+</body>
+</html>

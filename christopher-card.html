@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christopher Giroux - Custom Pokemon Card</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/rainbow-holo.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        main {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .card-container {
+            width: 330px;
+            height: 459px;
+        }
+
+        .loading-text {
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: center;
+            margin-top: 200px;
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-panel h3 {
+            margin-top: 0;
+            color: #c929f1;
+            font-size: 18px;
+        }
+
+        .card-details {
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .card-details strong {
+            color: #00ffff;
+        }
+
+        .controls {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .controls h4 {
+            margin: 0 0 10px 0;
+            color: #eedf10;
+            font-size: 14px;
+        }
+
+        .controls ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 12px;
+        }
+
+        .controls li {
+            margin-bottom: 5px;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .signature h4 {
+            margin: 0;
+            color: #c929f1;
+            font-size: 16px;
+        }
+
+        .signature p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .status {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2000;
+            text-align: center;
+            border: 1px solid #c929f1;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .info-panel, .signature {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                bottom: auto;
+                margin: 10px;
+                max-width: none;
+            }
+
+            main {
+                flex-direction: column;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="info-panel">
+        <h3>🎮 Christopher Giroux</h3>
+        <div class="card-details">
+            <strong>Card ID:</strong> custom-007<br>
+            <strong>Number:</strong> #007<br>
+            <strong>Type:</strong> Psychic ⚡<br>
+            <strong>Rarity:</strong> Rare Rainbow 🌈<br>
+            <strong>Category:</strong> Basic Pokémon<br>
+            <strong>Set:</strong> Custom
+        </div>
+        <div class="controls">
+            <h4>Interactive Controls:</h4>
+            <ul>
+                <li>🖱️ Hover for 3D tilt effects</li>
+                <li>👆 Click to expand/collapse</li>
+                <li>📱 Tilt device for gyroscope</li>
+                <li>⌨️ Tab + Enter for keyboard nav</li>
+                <li>✨ Showcase animation on load</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="signature">
+        <h4>✨ Pure JavaScript</h4>
+        <p>Converted from Svelte</p>
+        <p>All effects preserved!</p>
+    </div>
+
+    <div id="status" class="status">
+        <h3>🚀 Loading...</h3>
+        <p>Initializing your custom Pokemon card</p>
+    </div>
+
+    <main>
+        <div id="christopher-pokemon-card" class="card-container">
+            <p class="loading-text">Loading Christopher Giroux card...</p>
+        </div>
+    </main>
+
+    <!-- JavaScript Modules -->
+    <script type="module">
+        import { PokemonCard } from './js/components/PokemonCard.js';
+
+        // Show status
+        const statusEl = document.getElementById('status');
+        statusEl.style.display = 'block';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('christopher-pokemon-card');
+
+            try {
+                statusEl.innerHTML = '<h3>🎨 Creating Card...</h3><p>Applying holographic effects</p>';
+
+                // Exact same card data from your original Svelte component
+                const customCard = {
+                    "id": "custom-007",
+                    "set": "custom",
+                    "name": "Christopher Giroux",
+                    "supertype": "Pokémon",
+                    "subtypes": ["Basic"],
+                    "types": ["Psychic"],
+                    "number": "007",
+                    "rarity": "Rare Rainbow"
+                };
+
+                // Try to use the custom image, fallback to a Pokemon image if not available
+                let cardImage = "/assets/cards/PokePoke.png";
+
+                // Test if custom image exists, otherwise use a fallback
+                try {
+                    const testImg = new Image();
+                    testImg.src = cardImage;
+                    await new Promise((resolve, reject) => {
+                        testImg.onload = resolve;
+                        testImg.onerror = reject;
+                        setTimeout(reject, 2000); // 2 second timeout
+                    });
+                } catch {
+                    console.log('Custom image not found, using fallback');
+                    cardImage = "https://images.pokemontcg.io/sv3pt5/141.png"; // Pikachu fallback
+                }
+
+                statusEl.innerHTML = '<h3>⚡ Initializing...</h3><p>Setting up interactions</p>';
+
+                // Create the custom Pokemon card with showcase animation
+                const pokemonCard = new PokemonCard(container, {
+                    ...customCard,
+                    img: cardImage,
+                    showcase: true // Enable the cool intro animation
+                });
+
+                // Store reference for debugging
+                window.customCard = pokemonCard;
+
+                // Hide status after a delay
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 2000);
+
+                console.log('🎉 Christopher Giroux Pokemon Card initialized successfully!');
+                console.log('Card data:', { ...customCard, img: cardImage });
+                console.log('✨ Features active:');
+                console.log('  - 3D Tilt effects on hover');
+                console.log('  - Click to expand/collapse');
+                console.log('  - Device orientation support');
+                console.log('  - Holographic rainbow shine');
+                console.log('  - Spring-based animations');
+                console.log('  - Showcase intro animation');
+
+            } catch (error) {
+                console.error('Error creating card:', error);
+                statusEl.innerHTML = '<h3>❌ Error</h3><p>' + error.message + '</p>';
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
